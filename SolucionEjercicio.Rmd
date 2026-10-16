@@ -224,3 +224,15 @@ tail(Animals2)
 # Estructura del data frame
 str(Animals2)
 ```
+
+## Apartado c)
+
+```{r}
+# Columnas
+colnames(mammals)
+colnames(Animals2)
+
+# Nombres de los animales (filas)
+rownames(mammals)
+rownames(Animals2)
+```
