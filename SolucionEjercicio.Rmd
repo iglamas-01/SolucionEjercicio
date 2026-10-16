@@ -248,3 +248,19 @@ commonAnimals
 # Número de animales compartidos
 length(commonAnimals)
 ```
+
+## Apartado e)
+
+```{r}
+# Animales en Animals2 pero no en mammals
+solo_Animals2 <- setdiff(rownames(Animals2), rownames(mammals))
+solo_Animals2
+length(solo_Animals2)
+
+# Animales en mammals pero no en Animals2
+solo_mammals <- setdiff(rownames(mammals), rownames(Animals2))
+solo_mammals
+length(solo_mammals)
+```
+
+Podemos comprobar como los únicos 3 animales que no pertenecen a los dos conjuntos son tres dinosaurios: Diplodocus, Triceratops y Braquiosaurio. Los tres estan en el conjunto Animals2.
