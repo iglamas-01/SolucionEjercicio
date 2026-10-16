@@ -1,6 +1,6 @@
 ---
 title: "Solución Ejercicio Tarea Fase 2"
-author: ""
+author: "Ignacio Lacruz Mascarós"
 date: "`r Sys.Date()`"
 output:
   bookdown::pdf_document2:
