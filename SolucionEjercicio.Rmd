@@ -1,0 +1,179 @@
+---
+title: "Solución Ejercicio Tarea Fase 2"
+author: ""
+date: "`r Sys.Date()`"
+output:
+  bookdown::pdf_document2:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    figure_caption: "Figura" # Referencias en castellano
+    table_caption: "Tabla"
+  html_document:
+    echo: true
+    number_sections: true
+    theme: lumen
+    toc: true
+  html_notebook:
+    echo: true
+    number_sections: true
+    toc: true
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+  bookdown::html_document2:
+    echo: true
+    number_sections: true
+    theme: spacelab
+    toc: true
+    figure_caption: "Figura"
+    table_caption: "Tabla"
+always_allow_html: true
+params:
+  lang: ES
+lang: "`r switch(params$lang, ES = 'es-ES', EN = 'en-US')`"
+subtitle: "Análisis exploratorio de datos. Máster en Ciencia de Datos- UV"
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuación '
+    thm: 'Teorema '
+    lem: 'Lema '
+    def: 'Definición '
+    cor: 'Corolario '
+    prp: 'Proposición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Demostración. '
+    remark: 'Nota: '
+    solution: 'Solución. '
+---
+
+```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
+
+
+# CONFIGURACIÓN GENERAL
+library(knitr)
+options(width = 100)
+
+# Opciones generales de los chucks. Se utilizarán salvo cambios en el chunk
+opts_chunk$set(echo=F, message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 200, tidy = F, cache.path = '.cache/', fig.path = './figura/')
+
+# Opciones generales de dígitos cuando se incluyen tablas
+#options(xtable.type = 'html')
+knit_hooks$set(inline = function(x) {
+  
+  if(is.numeric(x)) {
+    round(x, getOption('digits'))
+  } else {
+    paste(as.character(x), collapse = ', ')
+  }
+})
+#knit_hooks$set(plot = knitr:::hook_plot_html)
+```
+
+```{r, message=FALSE}
+# Asegúrate que el paquete "pacman" está instalado
+if (!require("pacman")) install.packages("pacman")
+
+```
+
+```{r,results=FALSE}
+
+# Paquetes disponibles desde CRAN
+#################################
+pacman::p_load(
+     
+     ###############
+     # Creación de libros y 
+     bookdown,
+     
+     # Manejo de archivos y proyecto 
+     ###############################
+     here,     # describir ruta de archivo dentro de la carpeta principal del proyecto
+     rio,      # importación/exportación de múltiples tipos de datos
+     openxlsx, # importación/exportación de libros con múltiples hojas de excel
+     
+     # Manejo e instalación de paquetes
+     ##################################
+     pacman,   # instalación/carga de paquetes
+     renv,     # manejo de versiones de paquetes para trabajar con grupos colaborativos.
+     remotes,  # instalación de paquetes desde github
+     
+     # Manejo general de datos
+     #########################
+     tidyverse,    # incluye múltiples paquetes para el tratamiento de datos en formato tidy y presentación de los mismos.
+          #dplyr,      # manejo de datos
+          #tidyr,      # manejo de datos
+          #ggplot2,    # visualización de datos
+          #stringr,    # trabajo con cadenas y caracteres
+          #forcats,    # trabajo con factores
+          #lubridate,  # trabajo con fechas
+          #purrr       # iteraciones y trabajo con listas
+     linelist,     # limpiar linelists
+     naniar,       # trabajo con valores perdidos
+     
+     # Estadística  
+     ############
+     janitor,      # tablas y limpieza de datos
+     gtsummary,    # hacer tablas descriptivas con valores estadísticos
+     rstatix,      # realización rápida de test estadísticos y tablas descriptivas
+     broom,        # pasar a formato tidy los resultados de las regresiones
+     lmtest,       # realizar test de likelihood-ratio
+    # easystats,
+    # parameters, # alternativa para pasar a formato tidy los resultados de las regresiones 
+    # see,        # alternativa para visualizar forest plots 
+     
+     # plots - general
+     #################
+     #ggplot2,         # incluido en tidyverse
+     cowplot,          # combinar plots  
+     # patchwork,      # alternativa para combinar plots    
+     RColorBrewer,     # escalas de color
+     ggnewscale,       # para añadir capas de color adicionales
+     
+     # plots - tipos específicos
+     ########################
+     DiagrammeR,       # diagramas empleando lenguaje DOT
+#     incidence2,       # curvas epidémicas
+#     gghighlight,      # destacar un subgrupo
+     ggrepel,          # etiquetas inteligentes (smart labels)
+     plotly,           # gráficos interactivos
+     gganimate,        # gráficos animados
+
+     
+     # gis
+     ######
+     # sf,               # manejo de datos espaciales usando el formato Simple Features
+     # tmap,             # producción sencilla de mapas, tanto estáticos como interactivos
+     # OpenStreetMap,    # añadir una base con un mapa de OSM a un mapa en ggplot
+     # spdep,            # estadística espacial
+     
+     # reportes rutinarios
+     #################
+     rmarkdown,        # producción de archivos PDF, Word, Powerpoint y HTML
+     reportfactory,    # auto-organización de los trabajos realizados en R Markdown 
+     officer,          # powerpoints
+     
+     # dashboards
+     ############
+     flexdashboard,    # convierte código de R Markdown en un dashboard
+     shiny,            # aplicaciones web interactivas
+
+     # tablas for para presentaciones
+     #########################
+     knitr,            # generación de reportes y tablas HTML con R Markdown 
+     flextable        # tablas HTML tables
+     #DT,              # tablas HTML (alternativa)
+     #gt,              # tablas HTML (alternativa)data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAkCAYAAAD7PHgWAAABBklEQVR4Xu2XMQrCQBBFBQvR6wgJHsEDpHVjBDvvoBhbI3bWCkZbFUyhFrYiEat0WgmC6AVkdQqbIVmWZAOi82C64b+/bDWZDEEQP4phTLMaa9d003bTGMgu1psF7JVGNzuWPdzs18GDz443rgrIcndXbvW8g1axGfZKo7P2eBXc+WB74a3FGXtiA1kwzfnpqTF7hL3SwDfAaz+BqvjkwYADe6WhglQwJlQwKVQwKakVTGOoYNL5z4JxwBlUMEwqAu9SwTCpCLxLBcOkIvCusoKT9/WFQ6OkIvCukoJwt5rO0sehUVIReBem6ng+OLBXmnKjn4PbGM5PeKnqgXIlo5vHXoL4Nl4ZYqbbEGA7+wAAAABJRU5ErkJggg==
+     #huxtable,        # tablas HTML (alternativa) 
+     
+)
+
+```
+
+# Tarea Fase 2
+
+El objetivo de este ejercicio es continuar practicando el control de versiones con Git y GitHub.
