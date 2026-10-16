@@ -177,3 +177,20 @@ pacman::p_load(
 # Tarea Fase 2
 
 El objetivo de este ejercicio es continuar practicando el control de versiones con Git y GitHub.
+
+## Apartado a)
+
+Cargamos las librerías y accedemos a los datos.
+
+```{r}
+install.packages("MASS")
+install.packages("robustbase")
+
+library(MASS)
+library(robustbase)
+
+data(mammals, package = "MASS")
+data(Animals2, package = "robustbase")
+```
+
+Para realizar el primer apartado emplearemos las instrucciones ?mammals y ?Animals2 en la consola de R. Vemos así que mammals contiene el peso medio del cerebro y el cuerpo para 62 especies de mamíferos terrestres y Animals2 contiene de la misma forma el peso medio del cerebro y el cuerpo para 62 especies de mamíferos terrestres, y de otras tres especies sin identificar.
