@@ -194,3 +194,33 @@ data(Animals2, package = "robustbase")
 ```
 
 Para realizar el primer apartado emplearemos las instrucciones ?mammals y ?Animals2 en la consola de R. Vemos así que mammals contiene el peso medio del cerebro y el cuerpo para 62 especies de mamíferos terrestres y Animals2 contiene de la misma forma el peso medio del cerebro y el cuerpo para 62 especies de mamíferos terrestres, y de otras tres especies sin identificar.
+
+## Apartado b)
+
+```{r}
+# Dimensiones (filas y columnas)
+dim(mammals)
+
+# Primeras 6 filas
+head(mammals)
+
+# Últimas 6 filas
+tail(mammals)
+
+# Estructura del data frame
+str(mammals)
+```
+
+```{r}
+# Dimensiones
+dim(Animals2)
+
+# Primeras 6 filas
+head(Animals2)
+
+# Últimas 6 filas
+tail(Animals2)
+
+# Estructura del data frame
+str(Animals2)
+```
