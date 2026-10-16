@@ -264,3 +264,7 @@ length(solo_mammals)
 ```
 
 Podemos comprobar como los únicos 3 animales que no pertenecen a los dos conjuntos son tres dinosaurios: Diplodocus, Triceratops y Braquiosaurio. Los tres estan en el conjunto Animals2.
+
+## Apartado f)
+
+Los animales que no aparecen en ambos conjuntos son valores atípicos, lejos de los correspondientes a los mamíferos actuales que refleja el conjunto mammals.
